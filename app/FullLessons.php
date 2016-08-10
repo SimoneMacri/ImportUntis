@@ -35,5 +35,5 @@ class FullLessons extends Model
 {
     protected $table = 'full_lessons';
     public $timestamps = false;
-    public $casts = ['teacher_id' => 'string'];
+    public $casts = ['teacher_id' => 'string', 'classe_id' => 'string'];
 }
