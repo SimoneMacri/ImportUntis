@@ -1,0 +1,9 @@
+@extends('master')
+@section('content')
+    {!! Form::open(array( 'method'=> 'POST', 'url'=> URL::asset('/').'import/date/loadFile', 'class'=>'form', 'enctype'=>'multipart/form-data')) !!}
+        {!! Form::label('dateFile', 'inserisci il file:', ['class' => 'control-label']) !!}<br>
+        {!! Form::file('dateFile',null,['class'=>'form-control']) !!}
+        {!! Form::submit('Invia',['class'=>'btn btn-primary']) !!}
+
+    {!! Form::close() !!}
+@stop
