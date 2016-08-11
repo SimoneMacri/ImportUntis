@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Classe;
 use App\FullLessons;
 use App\Teacher;
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
 
 class FullLessonsController extends Controller
 {
@@ -16,10 +13,30 @@ class FullLessonsController extends Controller
         ini_set('memory_limit', '256M');
     }
 
+    public function index()
+    {
+        return view('import.all');
+    }
+
+    public function import()
+    {
+        ClasseController::importFile();
+        DateController::importFile();
+        RoomController::importFile();
+        SubjectController::importFile();
+        TeacherController::importFile();
+        TimeController::importFile();
+
+        LessonController::importFile();
+
+        return redirect('import/all');
+    }
+
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function all()
     {
         return view('json', ['data' => FullLessons::all()]);
     }
@@ -30,7 +47,7 @@ class FullLessonsController extends Controller
      */
     public function teacher($teacher)
     {
-        return view('json', ['data' => Teacher::find($teacher)->lessons]);
+        return view('json', ['data' => Teacher::findOrFail($teacher)->lessons]);
     }
 
     /**
@@ -39,6 +56,6 @@ class FullLessonsController extends Controller
      */
     public function classe($classe)
     {
-        return view('json', ['data' => Classe::find($classe)->lessons]);
+        return view('json', ['data' => Classe::findOrFail($classe)->lessons]);
     }
 }

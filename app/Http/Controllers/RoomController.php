@@ -7,7 +7,6 @@ use App\Room;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 
 class RoomController extends Controller
 {
@@ -17,6 +16,13 @@ class RoomController extends Controller
     }
 
     public function import()
+    {
+        self::importFile();
+
+        return redirect('import/room');
+    }
+
+    public static function importFile()
     {
 
         $myfile = fopen(Request::capture()->file('roomFile')->getPathname(), 'r');
@@ -32,7 +38,7 @@ class RoomController extends Controller
                 $room->id = Helper::issetOrNull($lineArr[0]);
                 $room->name = Helper::issetOrNull($lineArr[1]);
                 if ($room->save()) {
-                    error_log('OK');
+                    //  error_log('OK');
                 } else {
                     error_log('KO');
                     error_log(print_r($lineArr, true));
@@ -45,7 +51,6 @@ class RoomController extends Controller
                 error_log($e->getMessage());
             }
         }
-        return redirect('import/room');
     }
 
     public function getAll()

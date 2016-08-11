@@ -7,7 +7,6 @@ use app\Http\Helper;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 
 class ClasseController extends Controller
 {
@@ -18,7 +17,13 @@ class ClasseController extends Controller
 
     public function import()
     {
+        self::importFile();
 
+        return redirect('import/classe');
+    }
+
+    public static function importFile()
+    {
         $myfile = fopen(Request::capture()->file('classeFile')->getPathname(), 'r');
         $fullText = explode("\n", utf8_encode(fread($myfile, Request::capture()->file('classeFile')->getSize())));
         fclose($myfile);
@@ -45,7 +50,6 @@ class ClasseController extends Controller
                 error_log($e->getMessage());
             }
         }
-        return redirect('import/classe');
     }
 
     public function getAll()

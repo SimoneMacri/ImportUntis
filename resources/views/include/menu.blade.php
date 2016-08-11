@@ -20,22 +20,31 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Import <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li class="{{Request::is('import/classe') ? 'active' : ''}}"><a
-                                    href="{{URL::asset('/')}}import/classe">Classi</a></li>
-                        <li class="{{Request::is('import/date') ? 'active' : ''}}"><a
-                                    href="{{URL::asset('/')}}import/date">Date</a></li>
-                        <li class="{{Request::is('import/room') ? 'active' : ''}}"><a
-                                    href="{{URL::asset('/')}}import/room">Aule</a></li>
-                        <li class="{{Request::is('import/time') ? 'active' : ''}}"><a
-                                    href="{{URL::asset('/')}}import/time">Orario giorni</a></li>
-                        <li class="{{Request::is('import/teacher') ? 'active' : ''}}"><a
-                                    href="{{URL::asset('/')}}import/teacher">Docenti</a></li>
-                        <li class="{{Request::is('import/lesson') ? 'active' : ''}}"><a
-                                    href="{{URL::asset('/')}}import/lesson">Orario</a></li>
-                        <li class="{{Request::is('import/subject') ? 'active' : ''}}"><a
-                                    href="{{URL::asset('/')}}import/subject">Materie</a></li>
+                        <li class="{{Request::is('import/classe') ? 'active' : ''}}">
+                            <a href="{{URL::asset('/')}}import/classe">Classi</a>
+                        </li>
+                        <li class="{{Request::is('import/date') ? 'active' : ''}}">
+                            <a href="{{URL::asset('/')}}import/date">Date</a>
+                        </li>
+                        <li class="{{Request::is('import/room') ? 'active' : ''}}">
+                            <a href="{{URL::asset('/')}}import/room">Aule</a>
+                        </li>
+                        <li class="{{Request::is('import/time') ? 'active' : ''}}">
+                            <a href="{{URL::asset('/')}}import/time">Orario giorni</a>
+                        </li>
+                        <li class="{{Request::is('import/teacher') ? 'active' : ''}}">
+                            <a href="{{URL::asset('/')}}import/teacher">Docenti</a>
+                        </li>
+                        <li class="{{Request::is('import/subject') ? 'active' : ''}}">
+                            <a href="{{URL::asset('/')}}import/subject">Materie</a>
+                        </li>
                         <li role="separator" class="divider"></li>
-                        <li class="{{Request::is('import/all') ? 'active' : ''}}" s><a href="#">Tutto</a></li>
+                        <li class="{{Request::is('import/lesson') ? 'active' : ''}}">
+                            <a href="{{URL::asset('/')}}import/lesson">Orario</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li class="{{Request::is('import/all') ? 'active' : ''}}">
+                            <a href="{{URL::asset('/')}}import/all">Tutto</a></li>
                     </ul>
                 </li>
                 <li class="{{Request::is('orario_completo') ? 'active' : ''}}"><a

@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 
 Route::get('import/classe', 'ClasseController@index');
-Route::post('import/classe/loadFile', 'ClasseController@import');
+Route::post('import/classe/loadFile', ['uses' => 'ClasseController@import',]);
 
 Route::get('import/date', 'DateController@index');
 Route::post('import/date/loadFile', 'DateController@import');
@@ -38,9 +38,11 @@ Route::get('import/subject', 'SubjectController@index');
 Route::post('import/subject/loadFile', 'SubjectController@import');
 
 
-Route::get('orario_completo', 'FullLessonsController@index');
+Route::get('orario_completo', 'FullLessonsController@all');
 Route::get('orario_completo/classe/{id}', 'FullLessonsController@classe');
 Route::get('orario_completo/docente/{id}', 'FullLessonsController@teacher');
+Route::get('import/all', 'FullLessonsController@index');
+Route::post('import/all/loadFile', 'FullLessonsController@import');
 
 
 Route::get('service/classe/list', 'ClasseController@getAll');

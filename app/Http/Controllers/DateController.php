@@ -7,8 +7,6 @@ use app\Http\Helper;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-
 class DateController extends Controller
 {
 
@@ -18,6 +16,13 @@ class DateController extends Controller
     }
 
     public function import()
+    {
+        self::importFile();
+
+        return redirect('import/date');
+    }
+
+    public static function importFile()
     {
 
         $myfile = fopen(Request::capture()->file('dateFile')->getPathname(), 'r');
@@ -31,8 +36,7 @@ class DateController extends Controller
 
                 $date = new Date();
                 $date->id = Helper::issetOrNull($lineArr[0]);
-                $date->data_type_1 = Helper::issetOrNull($lineArr[1]);
-                $date->data_type_2 = Helper::issetOrNull($lineArr[2]);
+                $date->first_day_week = Helper::issetOrNull($lineArr[2]);
                 if ($date->saveOrFail()) {
                     //error_log('OK');
                 } else {
@@ -47,7 +51,6 @@ class DateController extends Controller
                 error_log($e->getMessage());
             }
         }
-        return redirect('import/date');
     }
 
     public function getAll()

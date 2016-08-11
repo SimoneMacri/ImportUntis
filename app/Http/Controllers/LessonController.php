@@ -7,7 +7,6 @@ use App\Lessons;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 
 class LessonController extends Controller
 {
@@ -18,6 +17,13 @@ class LessonController extends Controller
     }
 
     public function import()
+    {
+        self::importFile();
+
+        return redirect('import/lesson');
+    }
+
+    public static function importFile()
     {
 
         $myfile = fopen(Request::capture()->file('lessonFile')->getPathname(), 'r');
@@ -49,7 +55,6 @@ class LessonController extends Controller
                 error_log($e->getMessage());
             }
         }
-        return redirect("import/lesson");
     }
 
     public function getAll()

@@ -7,7 +7,6 @@ use App\Teacher;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 
 /**
  * Class TeacherController
@@ -23,10 +22,17 @@ class TeacherController extends Controller
         return view('import.teacher');
     }
 
+    public function import()
+    {
+        self::importFile();
+
+        return redirect('import/teacher');
+    }
+
     /**
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function import()
+    public static function importFile()
     {
 
         $myfile = fopen(Request::capture()->file('teacherFile')->getPathname(), 'r');
@@ -42,7 +48,7 @@ class TeacherController extends Controller
                 $teacher->id = Helper::issetOrNull($lineArr[0]);
                 $teacher->name = Helper::issetOrNull($lineArr[1]);
                 if ($teacher->save()) {
-                    error_log('OK');
+                    // error_log('OK');
                 } else {
                     error_log('KO');
                     error_log(print_r($lineArr, true));
@@ -54,7 +60,6 @@ class TeacherController extends Controller
                 error_log($e->getMessage());
             }
         }
-        return redirect('import/teacher');
     }
 
     /**

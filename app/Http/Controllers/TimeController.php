@@ -7,7 +7,6 @@ use App\Time;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 
 class TimeController extends Controller
 {
@@ -17,6 +16,13 @@ class TimeController extends Controller
     }
 
     public function import()
+    {
+        self::importFile();
+
+        return redirect('import/time');
+    }
+
+    public static function importFile()
     {
 
         $myfile = fopen(Request::capture()->file('timeFile')->getPathname(), 'r');
@@ -46,7 +52,6 @@ class TimeController extends Controller
                 error_log($e->getMessage());
             }
         }
-        return redirect('import/time');
     }
 
     public function getAll()

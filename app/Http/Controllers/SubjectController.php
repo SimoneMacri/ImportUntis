@@ -7,7 +7,6 @@ use App\Subject;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 
 class SubjectController extends Controller
 {
@@ -19,10 +18,17 @@ class SubjectController extends Controller
         return view('import.subject');
     }
 
+    public function import()
+    {
+        self::importFile();
+
+        return redirect('import/subject');
+    }
+
     /**
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function import()
+    public static function importFile()
     {
 
         $myfile = fopen(Request::capture()->file('subjectFile')->getPathname(), 'r');
@@ -38,7 +44,7 @@ class SubjectController extends Controller
                 $subject->id = Helper::issetOrNull($lineArr[0]);
                 $subject->name = Helper::issetOrNull($lineArr[1]);
                 if ($subject->save()) {
-                    error_log('OK');
+                    // error_log('OK');
                 } else {
                     error_log('KO');
                     error_log(print_r($lineArr, true));
@@ -51,7 +57,6 @@ class SubjectController extends Controller
                 error_log($e->getMessage());
             }
         }
-        return redirect("import/subject");
     }
 
     /**
