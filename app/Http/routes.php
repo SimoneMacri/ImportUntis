@@ -37,16 +37,16 @@ Route::post('import/lesson/loadFile', 'LessonController@import');
 Route::get('import/subject', 'SubjectController@index');
 Route::post('import/subject/loadFile', 'SubjectController@import');
 
-
-Route::get('orario_completo', 'FullLessonsController@all');
-Route::get('orario_completo/classe/{id}', 'FullLessonsController@classe');
-Route::get('orario_completo/docente/{id}', 'FullLessonsController@teacher');
 Route::get('import/all', 'FullLessonsController@index');
 Route::post('import/all/loadFile', 'FullLessonsController@import');
-
+Route::get('/showLessons/{classe}/{date}', 'FullLessonsController@showLessons');
 
 Route::get('service/classe/list', 'ClasseController@getAll');
 Route::get('service/date/list', 'DateController@getAll');
 Route::get('service/room/list', 'RoomController@getAll');
 Route::get('service/time/list', 'TimeController@getAll');
 Route::get('service/teacher/list', 'TeacherController@getAll');
+
+Route::get('service/full_lessons', 'FullLessonsController@all');
+Route::get('service/full_lessons/classe/{id}', 'FullLessonsController@classe');
+Route::get('service/full_lessons/teacher/{id}', 'FullLessonsController@teacher');

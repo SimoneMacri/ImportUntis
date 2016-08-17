@@ -4,8 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-
-
 /**
  * App\FullLessons
  *
@@ -17,6 +15,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $room_name
  * @property string $subject_id
  * @property string $subject_name
+ * @property integer $date_id
+ * @property string $start_hour
+ * @property string $finish_hour
+ * @property integer $day_id
  * @property string $start
  * @property string $finish
  * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereTeacherId($value)
@@ -27,6 +29,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereRoomName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereSubjectId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereSubjectName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereDateId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereStartHour($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereFinishHour($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereDayId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereStart($value)
  * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereFinish($value)
  * @mixin \Eloquent

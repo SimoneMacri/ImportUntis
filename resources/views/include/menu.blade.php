@@ -1,3 +1,6 @@
+<?php
+//error_log(App::make(\App\Http\Controllers\ClasseController)->prova());
+?>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->

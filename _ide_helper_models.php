@@ -27,11 +27,9 @@ namespace App{
  * App\Date
  *
  * @property integer $id
- * @property string $data_type_1
- * @property string $data_type_2
+ * @property string $first_day_week
  * @method static \Illuminate\Database\Query\Builder|\App\Date whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Date whereDataType1($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Date whereDataType2($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Date whereFirstDayWeek($value)
  * @mixin \Eloquent
  */
 	class Date extends \Eloquent {}
@@ -41,21 +39,27 @@ namespace App{
 /**
  * App\FullLessons
  *
- * @mixin \Eloquent
  * @property string $teacher_id
- * @property integer $day_id
- * @property integer $hour_id
- * @property string $subject_id
+ * @property string $teacher_name
+ * @property string $classe_id
+ * @property string $classe_name
  * @property string $room_id
- * @property string $class_id
- * @property string $weeks
+ * @property string $room_name
+ * @property string $subject_id
+ * @property string $subject_name
+ * @property string $start
+ * @property string $finish
  * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereTeacherId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereDayId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereHourId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereSubjectId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereTeacherName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereClasseId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereClasseName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereRoomId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereClassId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereWeeks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereRoomName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereSubjectId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereSubjectName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereStart($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\FullLessons whereFinish($value)
+ * @mixin \Eloquent
  */
 	class FullLessons extends \Eloquent {}
 }
@@ -118,6 +122,7 @@ namespace App{
  * @method static \Illuminate\Database\Query\Builder|\App\Teacher whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Teacher whereName($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\FullLessons[] $lessons
  */
 	class Teacher extends \Eloquent {}
 }
@@ -137,5 +142,22 @@ namespace App{
  * @mixin \Eloquent
  */
 	class Time extends \Eloquent {}
+}
+
+namespace App {
+    /**
+     * App\User
+     *
+     * @property integer $id
+     * @property string $username
+     * @property string $password
+     * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
+     * @method static \Illuminate\Database\Query\Builder|\App\User whereUsername($value)
+     * @method static \Illuminate\Database\Query\Builder|\App\User wherePassword($value)
+     * @mixin \Eloquent
+     */
+    class User extends \Eloquent
+    {
+    }
 }
 
