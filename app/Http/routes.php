@@ -10,43 +10,59 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-Route::get('/', function () {
-    return view('index');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return view('index');
+    });
 });
 
+Route::group(['prefix' => 'import'], function () {
+    Route::get('classe', 'ClasseController@index');
+    Route::post('classe/loadFile', ['uses' => 'ClasseController@import',]);
 
-Route::get('import/classe', 'ClasseController@index');
-Route::post('import/classe/loadFile', ['uses' => 'ClasseController@import',]);
+    Route::get('date', 'DateController@index');
+    Route::post('date/loadFile', 'DateController@import');
 
-Route::get('import/date', 'DateController@index');
-Route::post('import/date/loadFile', 'DateController@import');
+    Route::get('room', 'RoomController@index');
+    Route::post('room/loadFile', 'RoomController@import');
 
-Route::get('import/room', 'RoomController@index');
-Route::post('import/room/loadFile', 'RoomController@import');
+    Route::get('time', 'TimeController@index');
+    Route::post('time/loadFile', 'TimeController@import');
 
-Route::get('import/time', 'TimeController@index');
-Route::post('import/time/loadFile', 'TimeController@import');
+    Route::get('teacher', 'TeacherController@index');
+    Route::post('teacher/loadFile', 'TeacherController@import');
 
-Route::get('import/teacher', 'TeacherController@index');
-Route::post('import/teacher/loadFile', 'TeacherController@import');
+    Route::get('lesson', 'LessonController@index');
+    Route::post('lesson/loadFile', 'LessonController@import');
 
-Route::get('import/lesson', 'LessonController@index');
-Route::post('import/lesson/loadFile', 'LessonController@import');
+    Route::get('subject', 'SubjectController@index');
+    Route::post('subject/loadFile', 'SubjectController@import');
 
-Route::get('import/subject', 'SubjectController@index');
-Route::post('import/subject/loadFile', 'SubjectController@import');
+    Route::get('all', 'FullLessonsController@index');
+    Route::post('all/loadFile', 'FullLessonsController@import');
+});
 
-Route::get('import/all', 'FullLessonsController@index');
-Route::post('import/all/loadFile', 'FullLessonsController@import');
-Route::get('/showLessons/{classe}/{date}', 'FullLessonsController@showLessons');
+Route::group(['prefix' => 'service'], function () {
+    Route::get('classe/list', 'ClasseController@getAll');
+    Route::get('date/list', 'DateController@getAll');
+    Route::get('room/list', 'RoomController@getAll');
+    Route::get('time/list', 'TimeController@getAll');
+    Route::get('teacher/list', 'TeacherController@getAll');
 
-Route::get('service/classe/list', 'ClasseController@getAll');
-Route::get('service/date/list', 'DateController@getAll');
-Route::get('service/room/list', 'RoomController@getAll');
-Route::get('service/time/list', 'TimeController@getAll');
-Route::get('service/teacher/list', 'TeacherController@getAll');
+    Route::get('full_lessons', 'FullLessonsController@all');
+    Route::get('full_lessons/classe/{id}', 'FullLessonsController@classe');
+    Route::get('full_lessons/teacher/{id}', 'FullLessonsController@teacher');
 
-Route::get('service/full_lessons', 'FullLessonsController@all');
-Route::get('service/full_lessons/classe/{id}', 'FullLessonsController@classe');
-Route::get('service/full_lessons/teacher/{id}', 'FullLessonsController@teacher');
+    Route::get('news/', 'NewsController@allNews');
+    Route::get('news/teacher/{teacher_id}', 'NewsController@teacherNews');
+    Route::get('news/classe/{class_id}', 'NewsController@classeNews');
+});
+
+Route::group(['prefix' => 'news'], function () {
+    Route::get('/', 'NewsController@index');
+    Route::post('/create', 'NewsController@create');
+});
+
+Route::get('/showLessons/classe/{classe}/{date}', 'FullLessonsController@showLessonsClasse');
+Route::get('/showLessons/teacher/{classe}/{date}', 'FullLessonsController@showLessonsTeacher');
+

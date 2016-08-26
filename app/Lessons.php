@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Lessons whereClassId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Lessons whereWeeks($value)
  * @mixin \Eloquent
+ * @property integer $id
+ * @method static \Illuminate\Database\Query\Builder|\App\Lessons whereId($value)
  */
 class Lessons extends Model
 {

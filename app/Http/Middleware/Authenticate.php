@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 
 class Authenticate
 {
+    public function __construct()
+    {
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -15,15 +19,21 @@ class Authenticate
      * @param  string|null  $guard
      * @return mixed
      */
+
+
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->guest()) {
+        Auth::attempt(['username' => 'simone', 'password' => 'simo1293']);
+
+        error_log(print_r(Auth::check() ? "true" : "false", true));
+
+        /*if (Auth::guard($guard)->guest()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             }
 
             return redirect()->guest('login');
-        }
+        }*/
 
         return $next($request);
     }

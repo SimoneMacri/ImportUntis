@@ -45,12 +45,27 @@ class FullLessonsController extends Controller
      * @param $date
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showLessons($classe, $date)
+    public function showLessonsClasse($classe, $date)
     {
         /**
          * @var $tmp Lessons[]
          */
         $tmp = Classe::find($classe)->lessons()->whereDateId($date)->get();
+        $data = array();
+
+        foreach ($tmp as $lessons) {
+
+            $data[$lessons->start_hour][$lessons->day_id] = $lessons;
+        }
+        return view("showLessons", ['lessons' => $data, 'times' => Time::distinct()->get(['start_hour', 'finish_hour']), 'days' => DayOfWeek::all()]);
+    }
+
+    public function showLessonsTeacher($teacher, $date)
+    {
+        /**
+         * @var $tmp Lessons[]
+         */
+        $tmp = Teacher::find($teacher)->lessons()->whereDateId($date)->get();
         $data = array();
 
         foreach ($tmp as $lessons) {

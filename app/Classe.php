@@ -25,5 +25,9 @@ class Classe extends Model
         return $this->hasMany('App\FullLessons', 'classe_id', 'id');
     }
 
+    public function news()
+    {
+        return $this->belongsToMany('App\News', 'classe_news', 'classe_id', 'news_id');
+    }
 
 }

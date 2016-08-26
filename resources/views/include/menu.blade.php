@@ -50,6 +50,8 @@
                             <a href="{{URL::asset('/')}}import/all">Tutto</a></li>
                     </ul>
                 </li>
+                <li class="{{Request::is('events') ? 'active' : ''}}"><a href="{{URL::asset('/')}}events">Eventi</a>
+                </li>
                 <li class="{{Request::is('orario_completo') ? 'active' : ''}}"><a
                             href="{{URL::asset('/')}}orario_completo">Orario Completo</a></li>
             </ul>

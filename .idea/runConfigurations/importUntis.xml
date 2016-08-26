@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="importUntis" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="importUntis" start_url="/public">
+    <method />
+  </configuration>
+</component>
