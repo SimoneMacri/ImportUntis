@@ -5,18 +5,26 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Event
+ * App\News
  *
  * @property integer $id
  * @property string $title
  * @property string $description
  * @property string $start_date
  * @property string $finish_date
- * @method static \Illuminate\Database\Query\Builder|\App\Event whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Event whereTitle($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Event whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Event whereStartDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Event whereFinishDate($value)
+ * @property boolean $important
+ * @property string $imgFilePath
+ * @property string $imgPosition
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Classe[] $classi
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Teacher[] $teacher
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereStartDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereFinishDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereImportant($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereImgFilePath($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\News whereImgPosition($value)
  * @mixin \Eloquent
  */
 class News extends Model

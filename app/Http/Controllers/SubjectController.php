@@ -25,15 +25,29 @@ class SubjectController extends Controller
         return redirect('import/subject');
     }
 
+    private static function truncate()
+    {
+        \DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+        Subject::truncate();
+
+        \DB::statement('SET FOREIGN_KEY_CHECKS=1');
+    }
+
+
+
     /**
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public static function importFile()
     {
 
+        if (!Request::capture()->hasFile('subjectFile')) return false;
         $myfile = fopen(Request::capture()->file('subjectFile')->getPathname(), 'r');
-        $fullText = explode("\n", utf8_encode(fread($myfile, Request::capture()->file('subjectFile')->getSize())));
+        $fullText = explode("\n", trim(utf8_encode(fread($myfile, Request::capture()->file('subjectFile')->getSize()))));
         fclose($myfile);
+        if (!self::validateFile($fullText)) return false;
+        self::truncate();
 
         foreach ($fullText as $line) {
             try {
@@ -41,8 +55,8 @@ class SubjectController extends Controller
                 //error_log(print_r($lineArr, true));
 
                 $subject = new Subject();
-                $subject->id = Helper::issetOrNull($lineArr[0]);
-                $subject->name = Helper::issetOrNull($lineArr[1]);
+                $subject->id = Helper::issetAndFullOrNull($lineArr[0]);
+                $subject->name = Helper::issetAndFullOrNull($lineArr[1]);
                 if ($subject->save()) {
                     // error_log('OK');
                 } else {
@@ -57,6 +71,17 @@ class SubjectController extends Controller
                 error_log($e->getMessage());
             }
         }
+        return true;
+    }
+
+    private static function validateFile($fileText)
+    {
+        foreach ($fileText as $line) {
+            $lineArr = explode("\t", $line);
+            if (!isset($lineArr[0])) return false;
+            if (!isset($lineArr[1])) return false;
+        }
+        return true;
     }
 
     /**

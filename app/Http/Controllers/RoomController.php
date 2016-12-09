@@ -22,12 +22,25 @@ class RoomController extends Controller
         return redirect('import/room');
     }
 
+    private static function truncate()
+    {
+        \DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+        Room::truncate();
+
+        \DB::statement('SET FOREIGN_KEY_CHECKS=1');
+    }
+
+
     public static function importFile()
     {
 
+        if (!Request::capture()->hasFile('roomFile')) return false;
         $myfile = fopen(Request::capture()->file('roomFile')->getPathname(), 'r');
-        $fullText = explode("\n", utf8_encode(fread($myfile, Request::capture()->file('roomFile')->getSize())));
+        $fullText = explode("\n", trim(utf8_encode(fread($myfile, Request::capture()->file('roomFile')->getSize()))));
         fclose($myfile);
+        if (!self::validateFile($fullText)) return false;
+        self::truncate();
 
         foreach ($fullText as $line) {
             try {
@@ -35,8 +48,8 @@ class RoomController extends Controller
                 //error_log(print_r($lineArr, true));
 
                 $room = new Room();
-                $room->id = Helper::issetOrNull($lineArr[0]);
-                $room->name = Helper::issetOrNull($lineArr[1]);
+                $room->id = Helper::issetAndFullOrNull($lineArr[0]);
+                $room->name = Helper::issetAndFullOrNull($lineArr[1]);
                 if ($room->save()) {
                     //  error_log('OK');
                 } else {
@@ -51,6 +64,17 @@ class RoomController extends Controller
                 error_log($e->getMessage());
             }
         }
+        return true;
+    }
+
+    private static function validateFile($fileText)
+    {
+        foreach ($fileText as $line) {
+            $lineArr = explode("\t", $line);
+            if (!isset($lineArr[0])) return false;
+            if (!isset($lineArr[1])) return false;
+        }
+        return true;
     }
 
     public function getAll()

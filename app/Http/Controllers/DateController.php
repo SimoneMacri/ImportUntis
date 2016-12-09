@@ -22,12 +22,25 @@ class DateController extends Controller
         return redirect('import/date');
     }
 
+    private static function truncate()
+    {
+        \DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+        Date::truncate();
+
+        \DB::statement('SET FOREIGN_KEY_CHECKS=1');
+    }
+
     public static function importFile()
     {
 
+
+        if (!Request::capture()->hasFile('dateFile')) return false;
         $myfile = fopen(Request::capture()->file('dateFile')->getPathname(), 'r');
-        $fullText = explode("\n", utf8_encode(fread($myfile, Request::capture()->file('dateFile')->getSize())));
+        $fullText = explode("\n", trim(utf8_encode(fread($myfile, Request::capture()->file('dateFile')->getSize()))));
         fclose($myfile);
+        if (!self::validateFile($fullText)) return false;
+        self::truncate();
 
         foreach ($fullText as $line) {
             try {
@@ -35,8 +48,8 @@ class DateController extends Controller
                 //error_log(print_r($lineArr, true));
 
                 $date = new Date();
-                $date->id = Helper::issetOrNull($lineArr[0]);
-                $date->first_day_week = Helper::issetOrNull($lineArr[2]);
+                $date->id = Helper::issetAndFullOrNull($lineArr[0]);
+                $date->first_day_week = Helper::issetAndFullOrNull($lineArr[2]);
                 if ($date->saveOrFail()) {
                     //error_log('OK');
                 } else {
@@ -51,10 +64,21 @@ class DateController extends Controller
                 error_log($e->getMessage());
             }
         }
+        return true;
+    }
+
+    private static function validateFile($fileText)
+    {
+        foreach ($fileText as $line) {
+            $lineArr = explode("\t", $line);
+            if (!isset($lineArr[0])) return false;
+            if (!isset($lineArr[2])) return false;
+        }
+        return true;
     }
 
     public function getAll()
     {
-        return view('json', ['data' => Date::all()]);
+        return view('json', ['data' => Date::orderBy('first_day_week', 'ASC')->get()]);
     }
 }

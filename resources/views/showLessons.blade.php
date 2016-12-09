@@ -1,123 +1,117 @@
-<style>
+<html>
+<head>
+    {!!Html::style('/css/font-awesome.min.css')!!}
+    {!!Html::style('/css/bootstrap-theme.min.css')!!}
 
-    /* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+    {!!Html::style(URL::asset('/').'/css/bootstrap.min.css')!!}
+    {!!Html::style('/css/lessons_style.css')!!}
 
-    html, body, div, span, applet, object, iframe,
-    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-    a, abbr, acronym, address, big, cite, code,
-    del, dfn, em, img, ins, kbd, q, s, samp,
-    small, strike, strong, sub, sup, tt, var,
-    b, u, i, center,
-    dl, dt, dd, ol, ul, li,
-    fieldset, form, label, legend,
-    table, caption, tbody, tfoot, thead, tr, th, td,
-    article, aside, canvas, details, embed,
-    figure, figcaption, footer, header, hgroup,
-    menu, nav, output, ruby, section, summary,
-    time, mark, audio, video {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        font-size: 100%;
-        font: inherit;
-        vertical-align: baseline;
-    }
+    {!!Html::script('/script/jquery-3.1.1.min.js')!!}
+    {!!Html::script('/script/bootstrap.min.js')!!}
+    {!!Html::script('/script/script_lessons_list.js')!!}
 
-    /* HTML5 display-role reset for older browsers */
-    article, aside, details, figcaption, figure,
-    footer, header, hgroup, menu, nav, section {
-        display: block;
-    }
+    <meta name="viewport" content="width=device-width, user-scalable=no,
+initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 
-    body {
-        line-height: 1;
-    }
+</head>
+<body>
 
-    ol, ul {
-        list-style: none;
-    }
-
-    blockquote, q {
-        quotes: none;
-    }
-
-    blockquote:before, blockquote:after,
-    q:before, q:after {
-        content: '';
-        content: none;
-    }
-
-    table {
-        border-collapse: collapse;
-        border-spacing: 0;
-    }
-
-    /*finish reset*/
-    html, body, table {
-        width: 100%;
-        height: 100%;
-    }
-
-    table, tr, td {
-        border: 1px solid black;
-    }
-
-    td {
-        height: calc(100% / 11);
-        width: calc(100% / 8);
-        text-align: center;
-        vertical-align: middle;
-    }
-
-    td.lessons div.subject {
-        font-weight: bold;
-        font-size: small;
-    }
-
-    td.lessons div.detail {
-        font-weight: lighter;
-        font-size: x-small;
-    }
-
-    td.time {
-        font-size: x-small;
-    }
-
-    thead, tr > td:first-child {
-        background: #ccc;
-    }
-</style>
-<table>
-    <thead>
-    <td></td>
-    @foreach($days as $day)
-        <td class="day">{{$day->name}}</td>
-    @endforeach
-    </thead>
-
-    @foreach($times as $time)
-        <tr>
-            <td class="time">
-                {{$time->start_hour}}<br>
-                -<br>
-                {{$time->finish_hour}}
-            </td>
+<div class="firstRow">
+    <table>
+        <tr class="headerTable">
             @foreach($days as $day)
-                <td class="lessons">
-                    @if(isset($lessons[$time->start_hour][$day->id]))
-                        <div class="subject">{{ $lessons[$time->start_hour][$day->id]->subject_id}}</div>
-                        <div class="detail">
-                            {{ $lessons[$time->start_hour][$day->id]->room_id}}
-                            - {{ $lessons[$time->start_hour][$day->id]->teacher_id}}
-                        </div>
-                    @else
-                        &nbsp;
+                <td class="day">{{$day->name}}</td>
+            @endforeach
+        </tr>
+    </table>
+</div>
+
+<div class="body">
+    <table>
+        <tr class="contentTable">
+            @foreach($days as $day)
+                <td class="lessons" rowspan="{{count($times)}}">
+                    @if(isset($lessons[$day->id]))
+                        @foreach($lessons[$day->id] as $less)
+                            <?php
+                            $detail = "";
+                            $room = "";
+                            if (isset($less->detail)) {
+                                foreach ($less->detail as $det) {
+
+                                    if (isset($det->teacherName)) {
+                                        if ($detail != '') $detail .= ' - ';
+                                        $detail .= $det->teacherName;
+                                    }
+
+                                    if (isset($det->roomName)) {
+                                        if ($room != '') $room .= ' - ';
+                                        $room .= $det->roomId;
+                                    }
+
+                                    if (isset($det->classeId)) {
+                                        if ($detail != '') $detail .= ' - ';
+                                        $detail .= $det->classeId;
+                                    }
+                                }
+                            }
+
+                            $start = date_format(date_create($less->start), "H:i");
+                            $finish = date_format(date_create($less->finish), "H:i");
+                            ?>
+                            <div class="hour-{{$less->startHourId}} day-{{$day->id}} during-{{$less->hour_id - $less->startHourId }}"
+                                 data-toggle="modal" data-target="#lesson_detail"
+                                 data-title="{{$less->subject_name}}" data-detail="{{$detail}}" data-room="{{$room}}"
+                                 data-start="{{$start}}" data-finish="{{$finish}}"
+                                 onclick="lessonsClick(this);">
+
+                                {{$start}} - {{$finish}}
+                                <br>
+                                {{$less->subject_id}} - {{$room}}
+                            </div>
+
+
+                        @endforeach
                     @endif
                 </td>
             @endforeach
         </tr>
-    @endforeach
-</table>
+    </table>
+</div>
+
+<div id="lesson_detail" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <td>Dettaglio:</td>
+                        <td id="detail"></td>
+                    </tr>
+                    <tr>
+                        <td>Aula:</td>
+                        <td id="room"></td>
+                    </tr>
+                    <tr>
+                        <td>Inizio:</td>
+                        <td id="start"></td>
+                    </tr>
+                    <tr>
+                        <td>Fine:</td>
+                        <td id="finish"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

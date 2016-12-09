@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Classe whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Classe whereName($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\News[] $news
  */
 class Classe extends Model
 {

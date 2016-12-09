@@ -1,0 +1,250 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote {
+  &:before, &:after {
+    content: '';
+    content: none;
+  }
+}
+
+q {
+  &:before, &:after {
+    content: '';
+    content: none;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*finish reset*/
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+//table {
+// width: 100%;
+// height: 100%;
+//  border: 1px solid black;
+//$moltiplicatore: 1;
+//$row_height: 45px * $moltiplicatore;
+//$row_border: 1px;
+//$collumn_width: 100px * $moltiplicatore;
+//$header_height: 20px * $moltiplicatore;
+//$firstCollumn_width: 20px * $moltiplicatore;
+//$table_width : $collumn_width*5 + $firstCollumn_width;
+//$table_height : $row_height*10 + $header_height;
+//& *{
+//  overflow: hidden;
+//}
+//thead {
+//  & > tr {
+//    position: absolute;
+//    top:0;
+//    left:0;
+//    width: $table_width;
+//    z-index: 999;
+//    background: #ccc;
+//    &>td{
+//      height: $header_height;
+//      width: $collumn_width;
+//       text-align: center;
+//      vertical-align: middle;
+//      border: $row_border solid black;
+//      &:first-child{
+//        width: $firstCollumn_width;
+//      }
+//    }
+//  }
+//}
+//tbody {
+//  width: $table_width;
+//  height: $table_height;
+//  display: block;
+//  position: absolute;
+//  top: $header_height;
+//  left:0;
+//  tr {
+//    & > td {
+//      width: $collumn_width;
+//     border: $row_border solid black;
+//      &>td.time{
+//        width: $firstCollumn_width;
+//        height: $row_height;
+//        text-align: center;
+//        vertical-align: middle;
+//        background: #ccc;
+//        position: absolute;
+//        z-index: 999;
+//      }
+//      &:not(:first-child) {
+//        background-image: url("/img/table_background.png");
+//      }
+//      &.lessons div {
+//        position: absolute;
+//       background: #ccc;
+//       overflow: hidden;
+//
+//        @for $i from 1 to 10 {
+//          $top: $row_height * ($i - 1) + 1 ;//+ $header_height;
+//         $height: $row_height * ($i) - 1;
+//          &.hour-#{$i} {
+//           top: $top;
+//            z-index: $i;
+//            width: $collumn_width - 1;
+//          }
+//
+//          &.during-#{$i - 1} {
+//            height: $height;
+//          }
+//        }
+//      }
+//      &.time {
+//        font-size: x-small;
+//      }
+//    }
+//  }
+//}
+//}
+
+$cell_height: 60px;
+$padding_and_radius: 0px;
+
+$header_height: 30px;
+
+$border: 3px;
+$row_for_page: 2;
+$table_width: calc(100% / #{$row_for_page} * 5); //+ $firstCollumn_width;
+$table_height: $cell_height*10 + $header_height;
+
+* {
+  background: transparent
+}
+
+div {
+  &.modal-body {
+    table {
+      tr {
+        td {
+          text-align: left;
+          padding-left: 10px;
+        }
+      }
+    }
+  }
+  table {
+    tr {
+      td {
+        // border: #{$border} solid black;
+        vertical-align: middle;
+        text-align: center;
+      }
+    }
+  }
+  &.firstRow {
+    position: absolute;
+    width: $table_width;
+    border: 1px solid black;
+    table {
+      width: 100%;
+      tr {
+        width: 100%;
+        td {
+          width: calc(100% / 5);
+          height: $header_height;
+        }
+      }
+    }
+  }
+  &.body {
+    display: inline-block;
+    position: relative;
+    overflow: scroll;
+    top: $header_height;
+    //float: right;
+    //overflow: scroll;
+    width: $table_width;
+    height: calc(100% - #{$header_height});
+    table {
+      background-image: url("/img/table_background.png");
+      background-repeat: repeat-y;
+      background-size: 100% $cell_height;
+      width: 100%;
+      height: $cell_height * 11;
+      tr {
+        td {
+          border: 0px solid black;
+          border-left: $border;
+          border-right: $border;
+          position: relative;
+          width: calc(100% / 5);
+          height: 100%;
+          &.lessons div {
+            position: absolute;
+            background: rgba(195, 195, 195, 0.95);
+            width: calc(98% - #{ 2 * $padding_and_radius});
+            margin: 0 auto;
+            left: 1%;
+            border-radius: $padding_and_radius;
+
+            padding: $padding_and_radius;
+            border: 1px solid black;
+
+            @for $i from 1 to 10 {
+              $top: $cell_height * ($i - 1) + $border + $padding_and_radius;
+              $height: $cell_height * ($i) - 1 - (2 * $border) -  2 * $padding_and_radius;
+              &.hour-#{$i} {
+                top: $top;
+                z-index: $i;
+              }
+              &.day-#{$i} {
+                //left: $left;
+              }
+              &.during-#{$i - 1} {
+                height: $height;
+              }
+            }
+          }
+        }
+      }
+
+    }
+
+  }
+
+}
+
+
+
+
+
+

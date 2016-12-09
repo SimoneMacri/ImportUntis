@@ -29,15 +29,26 @@ class TeacherController extends Controller
         return redirect('import/teacher');
     }
 
+    private static function truncate()
+    {
+        \DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+        Teacher::truncate();
+
+        \DB::statement('SET FOREIGN_KEY_CHECKS=1');
+    }
+
     /**
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public static function importFile()
     {
-
+        if (!Request::capture()->hasFile('teacherFile')) return false;
         $myfile = fopen(Request::capture()->file('teacherFile')->getPathname(), 'r');
-        $fullText = explode("\n", utf8_encode(fread($myfile, Request::capture()->file('teacherFile')->getSize())));
+        $fullText = explode("\n", trim(utf8_encode(fread($myfile, Request::capture()->file('teacherFile')->getSize()))));
         fclose($myfile);
+        if (!self::validateFile($fullText)) return false;
+        self::truncate();
 
         foreach ($fullText as $line) {
             try {
@@ -45,8 +56,8 @@ class TeacherController extends Controller
                 //error_log(print_r($lineArr, true));
 
                 $teacher = new Teacher();
-                $teacher->id = Helper::issetOrNull($lineArr[0]);
-                $teacher->name = Helper::issetOrNull($lineArr[1]);
+                $teacher->id = Helper::issetAndFullOrNull($lineArr[0]);
+                $teacher->name = Helper::issetAndFullOrNull($lineArr[1]);
                 if ($teacher->save()) {
                     // error_log('OK');
                 } else {
@@ -60,6 +71,17 @@ class TeacherController extends Controller
                 error_log($e->getMessage());
             }
         }
+        return true;
+    }
+
+    private static function validateFile($fileText)
+    {
+        foreach ($fileText as $line) {
+            $lineArr = explode("\t", $line);
+            if (!isset($lineArr[0])) return false;
+            //if(!isset($lineArr[1])) return false;
+        }
+        return true;
     }
 
     /**

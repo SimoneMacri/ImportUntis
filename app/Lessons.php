@@ -25,21 +25,33 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property integer $id
  * @method static \Illuminate\Database\Query\Builder|\App\Lessons whereId($value)
+ * @property-read \App\Classe $classe
+ * @property-read \App\Teacher $teacher
+ * @property-read \App\Room $room
+ * @property-read \App\Subject $subject
  */
 class Lessons extends Model
 {
     protected $table = 'lesson';
     public $timestamps = false;
 
-   /* public function setClassIdAttribute($value)
+    public function classe()
     {
-        if (count(trim($value)) < 1)
-            $this->class_id = null;
+        return $this->hasOne('App\Classe', 'id', 'class_id');
     }
 
-    public function setRoomIdAttribute($value)
+    public function teacher()
     {
-        if (count(trim($value)) < 1)
-            $this->room_id = null;
-    }*/
+        return $this->hasOne('App\Teacher', 'id', 'teacher_id');
+    }
+
+    public function room()
+    {
+        return $this->hasOne('App\Room', 'id', 'room_id');
+    }
+
+    public function subject()
+    {
+        return $this->hasOne('App\Subject', 'id', 'subject_id');
+    }
 }

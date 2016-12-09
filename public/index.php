@@ -6,6 +6,9 @@
  * @author   Taylor Otwell <taylorotwell@gmail.com>
  */
 
+ini_set('memory_limit', '2G');
+ini_set('upload_max_filesize', '100M');
+ini_set('post_max_size', '100M');
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader

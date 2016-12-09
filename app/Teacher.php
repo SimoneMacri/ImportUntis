@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Teacher whereName($value)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\FullLessons[] $lessons
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\News[] $news
  */
 class Teacher extends Model
 {

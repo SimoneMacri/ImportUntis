@@ -17,9 +17,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Time whereStartHour($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Time whereFinishHour($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\DayOfWeek[] $dayOfWeek
  */
 class Time extends Model
 {
     protected $table = 'time';
     public $timestamps = false;
+
+    public function dayOfWeek()
+    {
+        return $this->hasMany('App\DayOFWeek', 'id', 'day_id');
+    }
+
 }

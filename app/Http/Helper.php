@@ -16,4 +16,9 @@ class Helper
         return isset($is) ? $txt : $txtFail;
     }
 
+    public static function issetAndFullOrNull(&$is)
+    {
+        return isset($is) && $is != '' ? $is : null;
+    }
+
 }

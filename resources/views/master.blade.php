@@ -1,5 +1,4 @@
 <?php
-
 if (!function_exists('classActivePath')) {
     function classActivePath($path)
     {
@@ -20,37 +19,36 @@ if (!function_exists('classActivePath')) {
 <head>
     <title>Laravel</title>
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    {!!Html::style('/css/font-awesome.min.css')!!}
+    {!!Html::style('/css/font-awesome.min.css')!!}
+    {!!Html::style('/css/bootstrap-theme.min.css')!!}
+    {!!Html::style('/css/style.css')!!}
+    {!!Html::style('https://fonts.googleapis.com/css?family=Lato:100')!!}
 
-    <style>
-        html, body {
-            height: 100%;
-        }
+    {!!Html::script('/script/jquery-3.1.1.min.js')!!}
+    {!!Html::script('/script/bootstrap.min.js')!!}
+    {!!Html::script('/script/bootstrap-confirmation.min.js')!!}
+    {!!Html::script('/script/tinymce/tinymce.min.js')!!}
 
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            display: table;
-            font-weight: 100;
-            font-family: 'Lato', sans-serif;
-        }
 
-        .container {
-        }
+    {!!Html::script('/script/script.js')!!}
 
-        .content {
-            display: inline-block;
-        }
+    {{--Server per tutte le chiamate ajax--}}
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
 
-        .title {
-            font-size: 96px;
-        }
-    </style>
-    {!!Html::script('//code.jquery.com/jquery-1.11.3.min.js')!!}
+
+    {{--!!Html::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')!!--}}
+    {{--!!Html::style('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')!!--}}
+    {{--!!Html::script('//code.jquery.com/jquery-1.11.3.min.js')!!--}}
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    {!!Html::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')!!}
-    {!!Html::style('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')!!}
 
 </head>
 <body>
@@ -59,14 +57,14 @@ if (!function_exists('classActivePath')) {
         @include("include.header")
     </div>
     <div class="content">
-        <!--<div class="title">Laravel 5</div>-->
         @yield("content")
     </div>
+    <div style="height: 230px;"></div>
     <div class="row">
         @include("include.footer")
     </div>
 </div>
 
-{!!Html::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')!!}
+{!!Html::style(URL::asset('/').'/css/bootstrap.min.css')!!}
 </body>
 </html>

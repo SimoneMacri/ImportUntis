@@ -1,0 +1,390 @@
+table#newsTable {
+  width: 100%;
+  tr {
+    th.actionBar {
+
+      text-align: right;
+    }
+    th, td {
+      padding: 5px;
+      text-align: center;
+      &.action {
+        // border: 0px auto;
+        border-left: 0;
+        border-right: 0;
+        > a {
+          cursor: pointer;
+          display: inline-block;
+          line-height: calc(200%); // allinearlo al centro
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    &:nth-child(even) {
+      background: #CCC;
+    }
+    th {
+      background: black;
+      color: white;
+    }
+    &:not(.firstRow):hover {
+      background: #AAA;
+    }
+  }
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: table;
+  font-weight: 100;
+  font-family: 'Lato', sans-serif;
+}
+
+.container {
+}
+
+.content {
+  display: inline-block;
+}
+
+.title {
+  font-size: 96px;
+}
+
+div.container {
+  width: 90%;
+  min-width: 1000px;
+}
+
+.warning {
+  color: red;
+}
+
+.success {
+  color: green;
+}
+
+.content {
+  width: 100%;
+  .thumbnail {
+    height: 250px;
+    > img {
+      height: 100%;
+    }
+  }
+}
+
+#navBar {
+  img {
+    height: 30px;
+    margin: 10px;
+  }
+}
+
+select {
+  width: 500px;
+}
+
+.descriptionTextArea {
+  margin: 0 auto;
+}
+
+table#newsDetailFormTable {
+  width: 100%;
+
+  td {
+    padding: 5px;
+    &:nth-child(2) {
+      width: 352px;
+    }
+
+    .selectInputTable {
+      width: 100%;
+      td {
+        width: 10%;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.2em;
+        &:first-of-type, &:last-of-type {
+          width: 35%;
+        }
+        select {
+          width: 100%;
+        }
+        button.listMoveElement {
+          height: 100%;
+          &:first-of-type {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+div#positionButton {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.submitButton {
+  width: 100%;
+}
+
+div#appleTVView {
+
+  $width: 1285px;
+  $height: 1080px;
+  $padding: 10px;
+  $scale: 1;
+  margin: 0 auto;
+  padding: $padding * $scale;
+  width: $width * $scale;
+  height: $height * $scale;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  position: relative;
+
+  > #img {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.leftStyle {
+    > #img {
+      float: left;
+      width: 45%;
+      height: 100%;
+    }
+    > .mce-container {
+      float: right;
+      width: 45%;
+    }
+  }
+
+  &.rightStyle {
+    > #img {
+      float: right;
+      width: 45%;
+      height: 100%;
+    }
+    > .mce-container {
+      float: left;
+      width: 45%;
+    }
+  }
+
+  &.topStyle {
+    > #img {
+      width: 100%;
+      height: 40%;
+    }
+    > .mce-container {
+      width: calc(100% - #{$padding *2});
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+    }
+  }
+
+  &.bottomStyle {
+    > #img {
+      width: calc(100% - #{$padding *2});
+      height: 40%;
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+    }
+    > .mce-container {
+      width: 100%
+    }
+  }
+
+  &.disableStyle {
+    > #img {
+      display: none;
+    }
+    > .mce-container {
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+}
+
+.full {
+  width: 100%;
+}
+
+.gap {
+  height: 30px;
+  width: 100%;
+  clear: both;
+  display: block;
+}
+
+.footer {
+  background: #EDEFF1;
+  height: 220px;
+  padding-bottom: 30px;
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid #CCCCCC;
+  border-top: 1px solid #DDDDDD;
+
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+
+  p {
+    margin: 0;
+  }
+  img {
+  }
+  h3 {
+    border-bottom: 1px solid #BAC1C8;
+    color: #54697E;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+    padding: 40px 0 10px;
+    text-transform: uppercase;
+  }
+  ul {
+    font-size: 13px;
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+    margin-top: 15px;
+    color: #7F8C8D;
+    li a {
+      padding: 0 0 5px 0;
+      display: inline-block;
+    }
+  }
+  a {
+    color: #78828D;
+  }
+
+  div.row > div {
+    &:last-child {
+      float: right;
+      a {
+        display: inline-block;
+        width: 45%;
+        height: 60px;
+      }
+      img {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.supportLi h4 {
+  font-size: 20px;
+  font-weight: lighter;
+  line-height: normal;
+  margin-bottom: 0 !important;
+  padding-bottom: 0;
+}
+
+.newsletter-box {
+  input#appendedInputButton {
+    background: #FFFFFF;
+    display: inline-block;
+    float: left;
+    height: 30px;
+    clear: both;
+    width: 100%;
+  }
+  .btn {
+    border: medium none;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    display: inline-block;
+    height: 40px;
+    padding: 0;
+    width: 100%;
+    color: #fff;
+  }
+  overflow: hidden;
+}
+
+.bg-gray {
+  background-image: -moz-linear-gradient(center bottom, #BBBBBB 0%, #F0F0F0 100%);
+  box-shadow: 0 1px 0 #B4B3B3;
+}
+
+.social li {
+  background: none repeat scroll 0 0 #B5B5B5;
+  border: 2px solid #B5B5B5;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -o-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  float: left;
+  height: 36px;
+  line-height: 36px;
+  margin: 0 8px 0 0;
+  padding: 0;
+  text-align: center;
+  width: 36px;
+  transition: all 0.5s ease 0s;
+  -moz-transition: all 0.5s ease 0s;
+  -webkit-transition: all 0.5s ease 0s;
+  -ms-transition: all 0.5s ease 0s;
+  -o-transition: all 0.5s ease 0s;
+  &:hover {
+    transform: scale(1.15) rotate(360deg);
+    -webkit-transform: scale(1.1) rotate(360deg);
+    -moz-transform: scale(1.1) rotate(360deg);
+    -ms-transform: scale(1.1) rotate(360deg);
+    -o-transform: scale(1.1) rotate(360deg);
+  }
+  a {
+    color: #EDEFF1;
+  }
+  &:hover {
+    border: 2px solid #2c3e50;
+    background: #2c3e50;
+  }
+  a i {
+    font-size: 16px;
+    margin: 0 0 0 5px;
+    color: #EDEFF1 !important;
+  }
+}
+
+.footer-bottom {
+  background: #E3E3E3;
+  border-top: 1px solid #DDDDDD;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  p.pull-left {
+    padding-top: 6px;
+  }
+}
+
+.payments {
+  font-size: 1.5em;
+}
+
+
+
+

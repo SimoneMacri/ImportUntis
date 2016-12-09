@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
 class Authenticate
 {
@@ -14,18 +13,19 @@ class Authenticate
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
+     * @param  string|null $guard
      * @return mixed
      */
 
 
     public function handle($request, Closure $next, $guard = null)
     {
-        Auth::attempt(['username' => 'simone', 'password' => 'simo1293']);
+        \Auth::attempt(['username' => 'root', 'password' => '123123']);
+        error_log(print_r(bcrypt('12123'), true));
 
-        error_log(print_r(Auth::check() ? "true" : "false", true));
+        error_log(print_r(\Auth::check() ? "true" : 'false', true));
 
         /*if (Auth::guard($guard)->guest()) {
             if ($request->ajax() || $request->wantsJson()) {
